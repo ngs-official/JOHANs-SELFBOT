@@ -2,6 +2,7 @@
 Some basic commands made into a selfbot so you can use them anywhere, including DMs!
 
 ## 🛠️ | Setup
+Get ready to start using this very soon!
 ### 📦 Requirements: 
 * Selfcord (https://github.com/dolfies/discord.py-self/tree/renamed)
 * Colorama (https://pypi.org/project/colorama/)
