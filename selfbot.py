@@ -2199,7 +2199,7 @@ Bot: {str(trgt.bot)} | System: {str(trgt.system)}
 
         async def roll(mx):
             print(f"{dft}\nRoll — Max: {mx}")
-            x = str(random.randint(1, mx))
+            x = random.randint(1, mx)
             print(f"{scs}► Rolled a {x} successfully!")
             await message.reply(f"```You have rolled a {x}!```")
             
@@ -2376,7 +2376,6 @@ Creates a giveaway that users can enter by reacting to your message
             if len(cmdR) > 1:
                 try:
                     mx = int(cmdR[1]) if int(cmdR[1]) > 0 else 1
-                    await message.delete()
                     await roll(mx)
                 except:
                     await message.reply("An exception has been raised.")
