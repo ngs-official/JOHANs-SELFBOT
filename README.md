@@ -13,3 +13,9 @@ Get ready to start using this very soon!
 3. Put whatever you want as your preferred prefix in the second line, replacing the 'prefix' text already there.
 4. Open the 'start.bat' file to begin the selfbot, use the help command to see all the available commands.
 If you need help you may DM me on Discord at 'johan.real' and don't feel shy.
+## 🔮 | Other
+Miscellaneous stuff are listed under here!
+### 💡 Updates (v1.1)
+- literally changed like everyone lol not gonna list it all
+### ⚠️ Disclaimer
+This tool is for educational purposes only, I do not intend on using this for malicious intent or have others use it for malicious intent.
