@@ -1,7 +1,7 @@
 
 # JOHANs SELFBOT | Version 1.1 | Developed by J0HAN
 
-import discord, asyncio, random, time, base64, string
+import selfcord, asyncio, random, time, base64, string
 from colorama import Fore as F
 
 try:
@@ -39,7 +39,7 @@ def convert(tme):
 
     return val * dct[unt]
 
-class client(discord.Client):
+class client(selfcord.Client):
     async def on_ready(self):
         print(f"{dec}\n▼ User: {bot.user}")
 
@@ -53,6 +53,7 @@ class client(discord.Client):
         async def delete(itm):
             await itm.delete()
 
+        # Info Commands
         async def info1(trgt):
             print(f"{dft}\nUser Info — Target: {trgt}")
             crtn = str(trgt.created_at).split(" ")
@@ -79,14 +80,14 @@ Bot: {str(trgt.bot)} | System: {str(trgt.system)}
 {bdg}```""")
         async def info2(trgt):
             print(f"{dft}\nServer Info — Target: {trgt}")
-            await ctx.send(f"""```SERVER INFO
+            await message.reply(f"""```SERVER INFO
 ▸ Name
 {trgt.name} ({trgt.id})
 ```""")
 
         async def avatar(trgt):
             print(f"{dft}\nAvatar — Target: {trgt}")
-            await ctx.send(trgt.avatar)
+            await message.reply(trgt.avatar)
             print(f"{scs}► Avatar has been fetched!")
 
         async def grab(trgtID):
@@ -106,10 +107,11 @@ Bot: {str(trgt.bot)} | System: {str(trgt.system)}
                 await asyncio.sleep(2) # Set to 0 for instant
                 await tmp.delete()
                 await message.reply(f"```Found & fetched target token: {ftkn}```")
-                print(f"{scs}► Token successfully fetched and sent!")
+                print(f"{scs}► Token successfully fetched!")
             except:
                 print(f"{wrn}► Unable to send grab message(s).")
 
+        # Message Commands
         async def spam(amt, mde, ntce):
             print(f"{dft}\nSpam — Amount: {amt} | Mode: {mde} | Message: {ntce}")
             msgs = 0
@@ -140,6 +142,15 @@ Bot: {str(trgt.bot)} | System: {str(trgt.system)}
                 loop.create_task(delete(ghst))
                 print(f"{scs}► It has also been deleted!")
             print(f"{dft}Ghost — Finished | Took {time.time()-strt}s")
+
+        async def dm_all(ntce):
+            print(f"{dft}\nDM All — Message: {ntce}")
+            strt = time.time()
+            for m in ctx.guild:
+                dm = await m.create_dm
+                await dm.send(ntce)
+                print(f"{scs}► DM has been sent!")
+            print(f"{dft}DM All — Finished | Took {time.time()-strt}s")
 
         async def rape():
             print(f"{dft}\nRape — Message: W.I.P.")
@@ -2197,6 +2208,7 @@ Bot: {str(trgt.bot)} | System: {str(trgt.system)}
                             print(f"{wrn}► Message unable to be removed.")
             print(f"{dft}Remove — Finished | Took {time.time()-strt}s")
 
+        # Fun Commands
         async def roll(mx):
             print(f"{dft}\nRoll — Max: {mx}")
             x = random.randint(1, mx)
@@ -2237,12 +2249,14 @@ Fetches the avatar of a user
 Sends a specified amount of messages in either normal mode (1) or delayed mode (2)
 ▸ {prfx}ghst [amount] [message]
 Sends a message and then deletes it after
+▸ {prfx}dmall [message]
+DMs every server member in the server you sent to command in a message
 ▸ {prfx}rape
-Edits all your messages in the channel you sent the command in to be a large, invisible message.
+Edits all your messages in the channel you sent the command in to be a large, invisible message
 ▸ {prfx}del [amount] [mode(1/2/3)] [target*]
 Deletes a specified amount of messages, 1 for all, 2 for self, 3 for a target user's
 ▸ {prfx}x [amount]
-Edits a specified amount of messages to be '[REMOVED]'
+Edits a specified amount of messages to be '[REMOVED]' (bypass message loggers)
 ▸ {prfx}roll [max]
 Rolls a number between one and the specified max
 ▸ {prfx}flip
@@ -2252,6 +2266,7 @@ Creates a giveaway that users can enter by reacting to your message
 
 *This parameter is only required if you pick mode 3```""")
         
+        # Info Commands
         if msg.startswith(f"{prfx}who"):
             cmdI = msg.split(" ")
             if len(cmdI) > 1:
@@ -2261,9 +2276,9 @@ Creates a giveaway that users can enter by reacting to your message
                         trgtID = int(a.replace(">", ""))
                     else:
                         trgtID = int(cmdI[1])
-                    await message.delete()
                     trgt = await bot.fetch_user(trgtID)
                     await info1(trgt)
+                    await message.delete()
                     print(f"{scs}► User info has been sent!")
                 except:
                     await message.reply("An exception has been raised.")
@@ -2272,9 +2287,9 @@ Creates a giveaway that users can enter by reacting to your message
 
         if msg.startswith(f"{prfx}what"):
             try:
-                await message.delete()
                 trgt = await bot.fetch_guild(ctx.guild.id)
                 await info2(trgt)
+                await message.delete()
                 print(f"{scs}► Server info has been sent!")
             except:
                 await message.reply("An exception has been raised.")
@@ -2288,9 +2303,9 @@ Creates a giveaway that users can enter by reacting to your message
                         trgtID = int(a.replace(">", ""))
                     else:
                         trgtID = int(cmdA[1])
-                    await message.delete()
                     trgt = await bot.fetch_user(trgtID)
                     await avatar(trgt)
+                    await message.delete()
                     print(f"{scs}► Avatar has been sent!")
                 except:
                     await message.reply("An exception has been raised.")
@@ -2307,12 +2322,13 @@ Creates a giveaway that users can enter by reacting to your message
                     else:
                         trgtID = int(cmdG[1])
                     await grab(trgtID)
-                    await message.delete()
+                    print(f"{scs}► Token grab has been sent!")
                 except:
                     await message.reply("An exception has been raised.")
             else:
                 await message.reply("Please enter in an user ID.")
 
+        # Message Commands
         elif msg.startswith(f"{prfx}spam"):
             cmdS = msg.split(" ", 3)
             if len(cmdS) > 3:
@@ -2337,6 +2353,15 @@ Creates a giveaway that users can enter by reacting to your message
                     await message.reply("An exception has been raised.")
             else:
                 await message.reply("Please enter in all required parameters.")
+
+        elif msg.startswith(f"{prfx}dmall"):
+            cmdD = msg.split(" ", 1)
+            if len(cmdD) > 1:
+                try:
+                    await message.delete()
+                    await dm_all(cmdD[1])
+                except:
+                    await message.reply("An exception has been raised.")
 
         elif msg.startswith(f"{prfx}rape"):
             try:
@@ -2371,6 +2396,7 @@ Creates a giveaway that users can enter by reacting to your message
             else:
                 await message.reply("Please enter in an amount.")
 
+        # Fun Commands
         elif msg.startswith(f"{prfx}roll"):
             cmdR = msg.split(" ")
             if len(cmdR) > 1:
@@ -2404,7 +2430,7 @@ Creates a giveaway that users can enter by reacting to your message
                 except:
                     await message.reply("An exception has been raised.")
             else:
-                await message.reply("Please enter in a max amount of winners, put 0 for infinite.")
+                await message.reply("Please enter in the duration of the giveaway in (s/m/h/d) to work.")
 
 bot = client()
 try:
